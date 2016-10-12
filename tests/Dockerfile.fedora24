@@ -1,0 +1,6 @@
+FROM geerlingguy/docker-fedora24-ansible:latest
+
+# Install ansible-lint
+RUN yum update -y
+RUN yum install -y python-pip
+RUN pip install ansible-lint

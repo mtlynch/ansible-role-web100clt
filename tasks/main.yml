@@ -1,0 +1,67 @@
+---
+- name: install build tools
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - automake
+    - gcc
+    - git
+    - libssl-dev
+    - make
+    - openssl
+    - subversion
+  when: ansible_os_family == 'Debian'
+
+- name: install build tools
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - automake
+    - gcc
+    - git
+    - make
+    - openssl
+    - openssl-devel
+    - subversion
+    - tar
+  when: ansible_os_family == 'RedHat'
+
+- name: download jansson source
+  unarchive:
+    copy: no
+    src: "http://www.digip.org/jansson/releases/jansson-{{ web100clt_jansson_version }}.tar.gz"
+    dest: "{{ web100clt_temp_dir }}"
+
+- name: build and install jansson from source
+  shell: ./configure && make && make install
+  args:
+    chdir: "{{ web100clt_jansson_build_dir }}"
+    creates: /usr/local/include/jansson.h
+
+- name: get ndt source
+  git:
+    repo: https://github.com/ndt-project/ndt.git
+    dest: "{{ web100clt_install_dir }}/ndt"
+    version: "{{ web100clt_ndt_version }}"
+    force: yes
+  register: ndt_source
+
+- name: build and install I2util from source
+  shell: ./bootstrap.sh && ./configure && make && make install
+  args:
+    chdir: "{{ web100clt_install_dir }}/ndt/I2util"
+  when: ndt_source.changed
+
+- name: build NDT
+  shell: ./bootstrap && ./configure && make
+  args:
+    chdir: "{{ web100clt_install_dir }}/ndt"
+  when: ndt_source.changed
+
+- name: build web100clt
+  command: make web100clt
+  args:
+    chdir: "{{ web100clt_install_dir }}/ndt/src"
+  when: ndt_source.changed
