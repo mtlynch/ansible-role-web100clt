@@ -1,0 +1,33 @@
+---
+sudo: required
+env:
+  - distro: ubuntu1404
+    init: /sbin/init
+    run_opts: ""
+  - distro: ubuntu1604
+    init: /sbin/init
+    run_opts: ""
+  - distro: fedora24
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro: centos6
+    init: /sbin/init
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro: centos7
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+
+services:
+  - docker
+
+install:
+  - pip install ansible==2.1.1.0
+
+  # Check ansible version
+  - ansible --version
+
+script:
+  - ./build
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

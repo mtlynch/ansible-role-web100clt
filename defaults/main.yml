@@ -1,0 +1,6 @@
+---
+web100clt_temp_dir: /tmp
+web100clt_install_dir: /opt
+web100clt_jansson_version: 2.9
+web100clt_jansson_build_dir: "{{ web100clt_temp_dir }}/jansson-{{ web100clt_jansson_version }}"
+web100clt_ndt_version: HEAD

@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: Michael Lynch
+  description: NDT C Client (web100clt), measures network bandwidth
+  license: Apache2
+  min_ansible_version: 2.1
+  platforms:
+  - name: Ubuntu
+    versions:
+      - trusty
+      - xenial
+  - name: Fedora
+    versions:
+      - 24
+  - name: EL
+    versions:
+      - 6
+      - 7
+  galaxy_tags:
+    - ndt
+    - bandwidth
+    - speedtest
