@@ -3,8 +3,5 @@
 export distro=ubuntu1404
 export init=/sbin/init
 export run_opts=""
-#export distro=centos7
-#export init=/usr/lib/systemd/systemd
-#export run_opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 bash -x ./build
