@@ -6,9 +6,10 @@
 
 Installs the NDT C client, with support for a variety of Linux servers.
 
-The NDT client is a tool for measuring network bandwidth. To use the client, you
-will need to direct it to a compatible NDT server. For publicly available NDT
-servers, consult [mlab-ns](https://mlab-ns.appspot.com/ndt).
+[NDT](https://github.com/ndt-project/ndt/wiki) is a tool for measuring network
+bandwidth. To use the client, you will need to direct it to a compatible NDT
+server. To find a publicly available NDT server, consult
+[mlab-ns](https://mlab-ns.appspot.com/ndt).
 
 ## Role Variables
 
@@ -54,7 +55,7 @@ None
 
 ## Example Playbook
 
-### `example.yml`
+#### `example.yml`
 
 ```yaml
 - hosts: all
