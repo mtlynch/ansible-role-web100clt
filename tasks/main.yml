@@ -53,15 +53,24 @@
   args:
     chdir: "{{ web100clt_install_dir }}/ndt/I2util"
   when: ndt_source.changed
+  tags:
+    # ANSIBLE0016 Tasks that run when changed should likely be handlers
+    - skip_ansible_lint
 
 - name: build NDT
   shell: ./bootstrap && ./configure && make
   args:
     chdir: "{{ web100clt_install_dir }}/ndt"
   when: ndt_source.changed
+  tags:
+    # ANSIBLE0016 Tasks that run when changed should likely be handlers
+    - skip_ansible_lint
 
 - name: build web100clt
   command: make web100clt
   args:
     chdir: "{{ web100clt_install_dir }}/ndt/src"
   when: ndt_source.changed
+  tags:
+    # ANSIBLE0016 Tasks that run when changed should likely be handlers
+    - skip_ansible_lint
