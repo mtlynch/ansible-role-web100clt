@@ -36,10 +36,14 @@
     dest: "{{ web100clt_temp_dir }}"
 
 - name: build and install jansson from source
-  shell: ./configure && make && make install
+  command: "{{ item }}"
   args:
     chdir: "{{ web100clt_jansson_build_dir }}"
     creates: /usr/local/include/jansson.h
+  with_items:
+    - ./configure
+    - make
+    - make install
 
 - name: get ndt source
   git:
@@ -49,15 +53,24 @@
   register: ndt_source
 
 - name: build and install I2util from source
-  shell: ./bootstrap.sh && ./configure && make && make install
+  command: "{{ item }}"
   args:
     chdir: "{{ web100clt_install_dir }}/ndt/I2util"
+  with_items:
+    - ./bootstrap.sh
+    - ./configure
+    - make
+    - make install
   when: ndt_source.changed
 
 - name: build NDT
-  shell: ./bootstrap && ./configure && make
+  command: "{{ item }}"
   args:
     chdir: "{{ web100clt_install_dir }}/ndt"
+  with_items:
+    - ./bootstrap
+    - ./configure
+    - make
   when: ndt_source.changed
 
 - name: build web100clt
