@@ -1,6 +1,0 @@
-FROM geerlingguy/docker-centos6-ansible:latest
-
-# Install ansible-lint
-RUN yum update -y
-RUN yum install -y gcc python-devel gmp-devel python-setuptools
-RUN easy_install Jinja2 ansible-lint

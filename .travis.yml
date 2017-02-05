@@ -5,14 +5,14 @@ env:
     init: /sbin/init
     run_opts: ""
   - distro: ubuntu1604
-    init: /sbin/init
+    init: /lib/systemd/systemd
     run_opts: ""
   - distro: fedora24
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
   - distro: centos6
     init: /sbin/init
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: ""
   - distro: centos7
     init: /usr/lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
@@ -22,9 +22,7 @@ services:
 
 install:
   - pip install ansible==2.1.1.0
-
-  # Check ansible version
-  - ansible --version
+  - pip install ansible-lint==3.3.3
 
 script:
   - ./build

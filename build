@@ -3,14 +3,12 @@
 # Exit immediately on error
 set -e
 
-# Pull container.
-sudo docker pull geerlingguy/docker-${distro}-ansible:latest
+echo "FROM geerlingguy/docker-${distro}-ansible:latest" > tests/Dockerfile
 
 # Customize container
 container_tag=${distro}:ansible
 sudo docker build \
   --rm=true \
-  --file=tests/Dockerfile.${distro} \
   --tag=${container_tag} tests
 
 # Run container in detached state
@@ -29,14 +27,17 @@ sudo docker exec "${container_id}" \
   ansible-playbook /etc/ansible/roles/role_under_test/tests/install.yml \
     --syntax-check
 
-# Ansible lint check.
-sudo docker exec "${container_id}" \
-  env TERM=xterm \
-  ansible-lint /etc/ansible/roles/role_under_test/tests/install.yml
-
 # Check that role installs successfully.
 install_dir=/opt
 sudo docker exec "${container_id}" \
   env TERM=xterm \
   ansible-playbook /etc/ansible/roles/role_under_test/tests/install.yml \
     --extra-vars "web100clt_install_dir=${install_dir}"
+
+# Clean up
+sudo docker stop "${container_id}"
+sudo docker rm "${container_id}"
+rm tests/Dockerfile
+
+# Ansible lint check (outside of docker container).
+ansible-lint tests/install.yml

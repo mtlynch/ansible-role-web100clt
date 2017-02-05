@@ -3,6 +3,7 @@
   apt:
     name: "{{ item }}"
     state: installed
+    update_cache: yes
   with_items:
     - automake
     - gcc
@@ -45,7 +46,6 @@
     repo: https://github.com/ndt-project/ndt.git
     dest: "{{ web100clt_install_dir }}/ndt"
     version: "{{ web100clt_ndt_version }}"
-    force: yes
   register: ndt_source
 
 - name: build and install I2util from source
