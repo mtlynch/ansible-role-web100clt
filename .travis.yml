@@ -1,6 +1,9 @@
 ---
 sudo: required
 env:
+  - distro: debian8
+    init: /bin/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
   - distro: ubuntu1404
     init: /sbin/init
     run_opts: ""
