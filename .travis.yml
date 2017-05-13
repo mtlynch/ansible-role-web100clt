@@ -1,8 +1,8 @@
 ---
 sudo: required
-global:
-  - ANSIBLE_ROLES_PATH: ~/roles
 env:
+  global:
+    - ANSIBLE_ROLES_PATH: ~/roles
   - distro: debian8
     init: /bin/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
