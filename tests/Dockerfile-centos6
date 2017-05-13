@@ -1,0 +1,13 @@
+FROM centos:6
+
+ENV TERM=xterm
+
+# Install dependencies.
+RUN yum makecache fast \
+ && yum -y install deltarpm epel-release \
+ && yum -y update \
+ && yum -y install \
+      ansible \
+      sudo \
+      which \
+ && yum clean all

@@ -3,3 +3,5 @@
 *.retry
 
 tests/Dockerfile
+tests/hosts
+tests/roles

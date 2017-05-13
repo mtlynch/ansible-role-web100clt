@@ -1,31 +1,36 @@
 ---
 sudo: required
 env:
-  - distro: debian8
-    init: /bin/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: ubuntu1404
-    init: /sbin/init
-    run_opts: ""
-  - distro: ubuntu1604
-    init: /lib/systemd/systemd
-    run_opts: ""
-  - distro: fedora24
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: centos6
-    init: /sbin/init
-    run_opts: ""
-  - distro: centos7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  global:
+    - ANSIBLE_ROLES_PATH: ~/roles
+  matrix:
+    - distro: debian8
+      init: /bin/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    - distro: ubuntu1404
+      init: /sbin/init
+      run_opts: ""
+    - distro: ubuntu1604
+      init: /lib/systemd/systemd
+      run_opts: ""
+    - distro: fedora24
+      init: /usr/lib/systemd/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    - distro: centos6
+      init: /sbin/init
+      run_opts: ""
+    - distro: centos7
+      init: /usr/lib/systemd/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 services:
   - docker
 
 install:
-  - pip install ansible==2.1.1.0
-  - pip install ansible-lint==3.3.3
+  - pip install ansible==2.3.0
+  - pip install ansible-lint==3.4.10
+  - mkdir "${ANSIBLE_ROLES_PATH}"
+  - printf "[defaults]\nhostfile=hosts\nansible_roles=${ANSIBLE_ROLES_PATH}" > ~/.ansible.cfg
 
 script:
   - ./build
