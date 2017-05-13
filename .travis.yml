@@ -1,5 +1,7 @@
 ---
 sudo: required
+global:
+  - ANSIBLE_ROLES_PATH: ~/roles
 env:
   - distro: debian8
     init: /bin/systemd
@@ -24,8 +26,10 @@ services:
   - docker
 
 install:
-  - pip install ansible==2.1.1.0
-  - pip install ansible-lint==3.3.3
+  - pip install ansible==2.3.0
+  - pip install ansible-lint==3.4.10
+  - mkdir "${ANSIBLE_ROLES_PATH}"
+  - printf "[defaults]\nhostfile=hosts\nansible_roles=${ANSIBLE_ROLES_PATH}" > ~/.ansible.cfg
 
 script:
   - ./build
