@@ -1,11 +1,11 @@
-FROM ubuntu:17.04
+FROM ubuntu:18.04
 
 ENV TERM=xterm
 
 # Install dependencies.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-       python-software-properties \
+       python \
        software-properties-common \
        rsyslog systemd systemd-cron sudo \
     && rm -rf /var/lib/apt/lists/* \
