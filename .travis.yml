@@ -13,15 +13,15 @@ env:
     - distro: ubuntu1604
       init: /lib/systemd/systemd
       run_opts: ""
-    - distro: ubuntu1704
+    - distro: ubuntu1804
       init: /lib/systemd/systemd
-      run_opts: ""
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     - distro: fedora24
       init: /usr/lib/systemd/systemd
       run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     - distro: centos6
-      init: /sbin/init
-      run_opts: ""
+      init: bash
+      run_opts: "--privileged"
     - distro: centos7
       init: /usr/lib/systemd/systemd
       run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
