@@ -1,7 +1,13 @@
 #!/bin/bash
 
-# Exit immediately on error
+# Exit immediately on error.
 set -e
+
+# Echo commands to stdout.
+set -x
+
+# Treat undefined variables as errors.
+set -u
 
 cd tests/
 
@@ -33,10 +39,10 @@ rm roles/role_under_test || true
 ln -s ../../ roles/role_under_test
 
 # Ansible syntax check.
-ansible-playbook test.yml --syntax-check
+ansible-playbook --inventory hosts test.yml --syntax-check
 
 # Check that role installs successfully.
-ansible-playbook test.yml
+ansible-playbook --inventory hosts test.yml
 
 # Check role for linter errors.
 ansible-lint test.yml -t role_under_test
