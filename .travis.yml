@@ -1,42 +1,12 @@
 ---
 sudo: required
-env:
-  global:
-    - ANSIBLE_ROLES_PATH: ~/roles
-  matrix:
-    - distro: debian8
-      init: /bin/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    - distro: ubuntu1404
-      init: /sbin/init
-      run_opts: ""
-    - distro: ubuntu1604
-      init: /lib/systemd/systemd
-      run_opts: ""
-    - distro: ubuntu1704
-      init: /lib/systemd/systemd
-      run_opts: ""
-    - distro: fedora24
-      init: /usr/lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-    - distro: centos6
-      init: /sbin/init
-      run_opts: ""
-    - distro: centos7
-      init: /usr/lib/systemd/systemd
-      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
 services:
   - docker
-
 install:
   - sudo pip install ansible==2.3.0
   - sudo pip install ansible-lint==3.4.10
-  - mkdir "${ANSIBLE_ROLES_PATH}"
-  - printf "[defaults]\nhostfile=hosts\nansible_roles=${ANSIBLE_ROLES_PATH}" > ~/.ansible.cfg
-
-script:
-  - ./build
-
+  - sudo pip install molecule==2.19.0
+  - sudo pip install docker
+script: molecule test
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

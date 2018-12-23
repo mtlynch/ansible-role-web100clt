@@ -1,37 +1,20 @@
 ---
 - name: install build tools
   apt:
-    name: "{{ item }}"
+    name: ["automake", "gcc", "git", "libssl-dev", "make", "openssl", "subversion"]
     state: installed
-    update_cache: yes
-  with_items:
-    - automake
-    - gcc
-    - git
-    - libssl-dev
-    - make
-    - openssl
-    - subversion
+    update_cache: true
   when: ansible_os_family == 'Debian'
 
 - name: install build tools
   package:
-    name: "{{ item }}"
+    name: ["automake", "gcc", "git", "make", "openssl", "openssl-devel", "subversion", "tar"]
     state: installed
-  with_items:
-    - automake
-    - gcc
-    - git
-    - make
-    - openssl
-    - openssl-devel
-    - subversion
-    - tar
   when: ansible_os_family == 'RedHat'
 
 - name: download jansson source
   unarchive:
-    copy: no
+    copy: false
     src: "http://www.digip.org/jansson/releases/jansson-{{ web100clt_jansson_version }}.tar.gz"
     dest: "{{ web100clt_temp_dir }}"
 

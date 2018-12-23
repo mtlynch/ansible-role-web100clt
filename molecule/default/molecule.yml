@@ -1,0 +1,46 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+platforms:
+  - name: instance
+    image: centos:6
+  - name: instance
+    image: centos:7
+  - name: instance
+    image: debian:8
+  - name: instance
+    image: fedora:24
+  - name: instance
+    image: ubuntu:16.04
+  - name: instance
+    image: ubuntu:18.04
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+    options:
+      x: ["ANSIBLE0016"]
+scenario:
+  name: default
+  test_sequence:
+    - lint
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    # Skip idempotence. web100clt's misconfigured .gitignore causes idempotence
+    # test to fail.
+    # - idempotence
+    - side_effect
+    - verify
+    - destroy
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
