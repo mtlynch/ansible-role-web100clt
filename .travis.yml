@@ -3,8 +3,8 @@ sudo: required
 services:
   - docker
 install:
-  - sudo pip install ansible==2.3.0
-  - sudo pip install ansible-lint==3.4.10
+  - sudo pip install ansible==2.7.1
+  - sudo pip install ansible-lint==3.4.23
   - sudo pip install molecule==2.19.0
   - sudo pip install docker
 script: molecule test
