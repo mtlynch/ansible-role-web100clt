@@ -1,32 +1,34 @@
 ---
-- name: install build tools
+- name: install build tools for Debian
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: installed
     update_cache: yes
-  with_items:
-    - automake
-    - gcc
-    - git
-    - libssl-dev
-    - make
-    - openssl
-    - subversion
+  vars:
+    packages:
+      - automake
+      - gcc
+      - git
+      - libssl-dev
+      - make
+      - openssl
+      - subversion
   when: ansible_os_family == 'Debian'
 
-- name: install build tools
+- name: install build tools for RedHat
   package:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: installed
-  with_items:
-    - automake
-    - gcc
-    - git
-    - make
-    - openssl
-    - openssl-devel
-    - subversion
-    - tar
+  vars:
+    packages:
+      - automake
+      - gcc
+      - git
+      - make
+      - openssl
+      - openssl-devel
+      - subversion
+      - tar
   when: ansible_os_family == 'RedHat'
 
 - name: download jansson source
