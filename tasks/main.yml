@@ -2,7 +2,7 @@
 - name: install build tools for Debian
   apt:
     name: "{{ packages }}"
-    state: installed
+    state: present
     update_cache: yes
   vars:
     packages:
@@ -18,7 +18,7 @@
 - name: install build tools for RedHat
   package:
     name: "{{ packages }}"
-    state: installed
+    state: present
   vars:
     packages:
       - automake
